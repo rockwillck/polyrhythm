@@ -24,10 +24,12 @@ class Note {
 
 // var notes = [new Note("C3", 0.5, 0, 2), new Note("E3", 0.6, 0, 2), new Note("G3", 0.7, 0, 2), new Note("B3", 0.8, 0, 2), new Note("C4", 0.9, 0, 2), new Note("E4", 1, 0, 2), new Note("G4", 1.1, 0, 2), new Note("B4", 1.2, 0, 2), new Note("C5", 1.3, 0, 2), new Note("E5", 1.4, 0, 2), new Note("G5", 1.5, 0, 2), new Note("B5", 1.6, 0, 2)]
 var notes = []
-for (index = 0; index < 50; index++) {
-    chord = ["C", "E", "G", "B"]
-    notes.push(new Note(chord[index%chord.length] + (Math.floor(index/chord.length)), index*0.1 + 1, 0, 2))
+for (index = 0; index < 20; index++) {
+    chord = ["C", "D", "E", "F", "G", "A", "B"]
+    notes.push(new Note(chord[index%chord.length] + (Math.floor(index/chord.length) + 2), index*0.01 + 0.3, 0, 2))
 }
+
+const increment = 20
 
 async function begin(btn) {
     await Tone.start()
@@ -38,7 +40,7 @@ async function begin(btn) {
             for (note of notes) {
                 note.play()
             }
-            setInterval(animate, 10)
+            setInterval(animate, increment)
         }
     )
 }
@@ -51,9 +53,39 @@ canvas.height = 1024
 
 var frame = 0
 
+var currentPoint = [canvas.width/2, canvas.height/2, 0]
 function animate() {
     ctx.fillStyle = "rgba(0, 0, 0, 1)"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    ctx.strokeStyle = `rgba(255, 255, 255, ${1 - currentPoint[2]/100})`
+    ctx.beginPath()
+    ctx.arc(currentPoint[0], currentPoint[1], currentPoint[2], 0, 2*Math.PI)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.arc(currentPoint[0], currentPoint[1], currentPoint[2]*0.8, 0, 2*Math.PI)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.arc(currentPoint[0], currentPoint[1], currentPoint[2]*0.6, 0, 2*Math.PI)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.arc(currentPoint[0], currentPoint[1], currentPoint[2]*0.4, 0, 2*Math.PI)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.arc(currentPoint[0], currentPoint[1], currentPoint[2]*0.2, 0, 2*Math.PI)
+    ctx.closePath()
+    ctx.stroke()
+    currentPoint[2]++
+    if (currentPoint[2] >= 100) {
+        currentPoint[2] = 0
+        currentPoint[0] = Math.random()*canvas.width
+        currentPoint[1] = Math.random()*canvas.height
+    }
+
     for (let i = 0; i < notes.length; i++) {
         ctx.strokeStyle = "white"
         ctx.fillStyle = "white"
@@ -66,8 +98,8 @@ function animate() {
         ctx.strokeRect(((i/notes.length) + 0.5/notes.length)*canvas.width - 10, canvas.height*0.1 - 10, 20, canvas.height*0.8 + 20)
 
         let note = notes[i]
-        note.velocity += note.acceleration/100
-        note.position = note.position + note.velocity/100
+        note.velocity += note.acceleration/(1000/increment)
+        note.position = note.position + note.velocity/(1000/increment)
         renderPosition = Math.abs((-(note.position %(note.pathLength*2))+ note.pathLength))
         ctx.fillRect(((i/notes.length) + 0.5/notes.length)*canvas.width - 10, canvas.height*0.1 + (renderPosition)/note.pathLength *canvas.height*0.8 - 10, 20, 20)
     }
