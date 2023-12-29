@@ -25,8 +25,8 @@ class Note {
 // var notes = [new Note("C3", 0.5, 0, 2), new Note("E3", 0.6, 0, 2), new Note("G3", 0.7, 0, 2), new Note("B3", 0.8, 0, 2), new Note("C4", 0.9, 0, 2), new Note("E4", 1, 0, 2), new Note("G4", 1.1, 0, 2), new Note("B4", 1.2, 0, 2), new Note("C5", 1.3, 0, 2), new Note("E5", 1.4, 0, 2), new Note("G5", 1.5, 0, 2), new Note("B5", 1.6, 0, 2)]
 var notes = []
 for (index = 0; index < 20; index++) {
-    chord = ["C", "D", "E", "F", "G", "A", "B"]
-    notes.push(new Note(chord[index%chord.length] + (Math.floor(index/chord.length) + 2), index*0.01 + 0.3, 0, 2))
+    chord = ["C", "E", "G", "B"]
+    notes.push(new Note(chord[index%chord.length] + (Math.floor(index/chord.length) + 1), index*0.01 + 0.5, 0, 2))
 }
 
 const increment = 20
