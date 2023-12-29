@@ -1,0 +1,40 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: black;
+}
+
+canvas {
+	background-color: black;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vmin;
+	height: 100vmin;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	translate: -50% -50%;
+}
+
+button {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+	z-index: 2;
+	border: none;
+	background-color: black;
+	color: white;
+	border-color: white;
+	border:solid;
+	border-width: 2px;
+	font-size: 30px;
+	padding: 10px;
+	border-radius: 10px;
+	text-transform: uppercase;
+	transition: 0.2s;
+}
+button:hover {
+	background-color: white;
+	color: black;
+}
